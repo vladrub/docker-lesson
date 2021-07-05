@@ -1,0 +1,28 @@
+version: '3'
+
+######### Services ###################################
+
+services:
+  mysql:
+    image: mysql:8.0.23
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=app
+    networks:
+      - test-network
+
+  pma:
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - "7000:80"
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+    networks:
+      - test-network
+
+######### Networks ###################################
+
+networks:
+  test-network:
+      driver: bridge
